@@ -1,5 +1,6 @@
 const util = require('util')
 const fs = require('fs')
+const uuid = require('./uuid');
 
 const readN = util.promisify(fs.readFile)
 const writeN = util.promisify(fs.writeFile)
@@ -27,7 +28,7 @@ class Hold {
         if (!text) {
             throw new Error('Please write something in the body.')
         }
-        const addingNote = { title, text, id: note.length+1 }
+        const addingNote = { title, text, id: uuid() }
         return this.retrieveNote()
             .then((notes) => [...notes, addingNote])
             .then((newNote) => this.write(newNote))
